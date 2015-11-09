@@ -11,6 +11,15 @@ class MoviesController < ApplicationController
   end
 
   def index
+
+    if !params[:sort_by]  && session[:sort_by]
+      flash.keep
+      redirect_to movies_path(sort_by: session[:sort_by], ratings: params[:ratings]) and return
+    end
+    if !params[:ratings]  && session[:ratings]
+      flash.keep
+      redirect_to movies_path(ratings: session[:ratings], sort_by: params[:sort_by]) and return
+    end
     @all_ratings = Movie.possible_ratings
     @movies = Movie.all
     @selected_sort = params[:sort_by]
@@ -26,6 +35,9 @@ class MoviesController < ApplicationController
       @title_header = 'hilite' if @selected_sort == 'title'
       @release_date_header = 'hilite' if @selected_sort == 'release_date'
     end
+    session[:sort_by] = params[:sort_by]
+    session[:ratings] = params[:ratings]
+
   end
 
   def new
