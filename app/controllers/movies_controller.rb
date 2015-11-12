@@ -1,3 +1,4 @@
+require 'byebug'
 class MoviesController < ApplicationController
 
   def movie_params
@@ -11,7 +12,6 @@ class MoviesController < ApplicationController
   end
 
   def index
-
     if !params[:sort_by]  && session[:sort_by]
       flash.keep
       redirect_to movies_path(sort_by: session[:sort_by], ratings: params[:ratings]) and return
@@ -24,6 +24,7 @@ class MoviesController < ApplicationController
     @movies = Movie.all
     @selected_sort = params[:sort_by]
     @selected_ratings = params[:ratings]
+
 
     if @selected_ratings
       @selected_ratings_array = @selected_ratings.keys
