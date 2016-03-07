@@ -45,6 +45,7 @@ table#movies th {
   background-color: wheat;
 }
 table#movies th, table#movies td {
+  
   padding: 4px;
   text-align: left;
 }

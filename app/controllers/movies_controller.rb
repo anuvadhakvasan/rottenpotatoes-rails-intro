@@ -13,11 +13,11 @@ class MoviesController < ApplicationController
 
   def index
     if !params[:sort_by]  && session[:sort_by]
-      flash.keep
+      #flash.keep
       redirect_to movies_path(sort_by: session[:sort_by], ratings: params[:ratings]) and return
     end
     if !params[:ratings]  && session[:ratings]
-      flash.keep
+      #flash.keep
       redirect_to movies_path(ratings: session[:ratings], sort_by: params[:sort_by]) and return
     end
     @all_ratings = Movie.possible_ratings
@@ -28,7 +28,7 @@ class MoviesController < ApplicationController
 
     if @selected_ratings
       @selected_ratings_array = @selected_ratings.keys
-      @movies = @movies.where(:rating => @selected_ratings_array)
+      @movies = @movies.where(:rating => @selected_ratings_array) 
     end
 
     if @selected_sort
@@ -47,6 +47,9 @@ class MoviesController < ApplicationController
 
   def create
     @movie = Movie.create!(movie_params)
+    #@movie.title = movie_params[:title]
+    #@movie.release_date = movie_params[:release_date]
+    #@movie.rating = movie_params[:rating]
     flash[:notice] = "#{@movie.title} was successfully created."
     redirect_to movies_path
   end
